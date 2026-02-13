@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Based Diagnosis of Thyroid Disorders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a4b8c;
+            --secondary-color: #2c6fb7;
+            --accent-color: #4a90e2;
+            --light-color: #f0f7ff;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #e74c3c;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a4b8c 0%, #2c6fb7 50%, #4a90e2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            color: var(--dark-color);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            width: 90%;
+            max-width: 900px;
+            margin: auto;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        h1 i {
+            color: var(--accent-color);
+        }
+
+        .upload-section {
+            background: var(--light-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            border: 2px dashed #c5d9f1;
+        }
+
+        .upload-label {
+            display: block;
+            margin-bottom: 20px;
+            font-weight: 500;
+            color: var(--dark-color);
+            font-size: 1.1rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-input-label {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 14px 28px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(26, 75, 140, 0.3);
+        }
+
+        .file-input-label:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(26, 75, 140, 0.4);
+        }
+
+        .file-input-label i {
+            margin-right: 10px;
+        }
+
+        .submit-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            background: #3a80d2;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        .image-box {
+            margin: 30px 0;
+            padding: 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .image-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            display: block;
+            max-height: 400px;
+            object-fit: contain;
+        }
+
+        .result {
+            background: var(--light-color);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            margin: 30px 0;
+            text-align: left;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .result h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result p {
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+
+        .highlight {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .confidence {
+            color: var(--success-color);
+            font-weight: 700;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 75, 140, 0.3);
+        }
+
+        .btn-danger {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .access-denied {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .access-denied h2 {
+            color: var(--warning-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .access-denied p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .access-denied a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .access-denied a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container { width: 95%; padding: 25px; }
+            h1 { font-size: 1.8rem; }
+            .button-group { flex-direction: column; align-items: center; }
+            .btn { width: 100%; max-width: 250px; justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 20px; }
+            h1 { font-size: 1.5rem; }
+            .upload-section { padding: 20px; }
+            .file-input-label, .submit-btn { width: 100%; margin: 5px 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if session.get('logged_in') %}
+            <h1><i class="fas fa-diagnoses"></i> Thyroid Disease Classification</h1>
+            
+            <div class="upload-section">
+                <form method="POST" enctype="multipart/form-data">
+                    <label class="upload-label">Upload a thyroid ultrasound image for analysis</label>
+                    <input type="file" name="file" id="file" class="file-input" accept="image/*" required>
+                    <label for="file" class="file-input-label">
+                        <i class="fas fa-file-upload"></i> Choose Image
+                    </label>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-search"></i> Analyze Image
+                    </button>
+                </form>
+            </div>
+
+            {% if image_data %}
+                <div class="image-box">
+                    <h3><i class="fas fa-image"></i> Uploaded Image</h3>
+                    <img src="data:image/jpeg;base64,{{ image_data }}" alt="Thyroid Ultrasound" class="image-preview">
+                </div>
+
+                <div class="result">
+                    <h3><i class="fas fa-chart-line"></i> Analysis Results</h3>
+                    <p><span class="highlight">Prediction:</span> {{ label }}</p>
+                    <p><span class="highlight">Confidence:</span> <span class="confidence">{{ confidence }}%</span></p>
+                </div>
+            {% endif %}
+
+            <div class="button-group">
+                <a href="{{ url_for('index') }}" class="btn btn-primary">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+                <a href="{{ url_for('logout') }}" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+
+        {% else %}
+            <div class="access-denied">
+                <h2><i class="fas fa-exclamation-triangle"></i> Access Denied</h2>
+                <p>Please <a href="{{ url_for('login') }}">login</a> or <a href="{{ url_for('register') }}">register</a> to access the prediction page.</p>
+                <a href="{{ url_for('index') }}" class="btn btn-primary">
+                    <i class="fas fa-home"></i> Go to Home
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Display selected file name
+        document.getElementById('file')?.addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name;
+            if (fileName) {
+                document.querySelector('.file-input-label').innerHTML =
+                    `<i class="fas fa-file-image"></i> ${fileName}`;
+            }
+        });
+    </script>
+</body>
+</html>

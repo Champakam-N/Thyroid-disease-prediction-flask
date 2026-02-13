@@ -1,0 +1,17 @@
+flask
+numpy
+pillow
+tensorflow
+gunicorn
+
+
+
+flask → Web framework
+
+numpy → Image array processing
+
+pillow → Image handling
+
+tensorflow → CNN model
+
+gunicorn → Deployment server
