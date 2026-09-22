@@ -14,7 +14,7 @@ The application allows users to register, log in, and upload thyroid images to g
 - Confidence score display
 - Clean Flask web interface
 
----
+
 
 ##  Machine Learning Model
 
@@ -52,7 +52,7 @@ The application allows users to register, log in, and upload thyroid images to g
 └── static
 
 
----
+
 
 ##  How to Run
 
