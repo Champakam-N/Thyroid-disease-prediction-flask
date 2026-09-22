@@ -5,8 +5,6 @@ Thyroid disease classification using CNN and Flask with user authentication
 A web-based Thyroid Disease Classification system built using Flask and a Convolutional Neural Network (CNN).  
 The application allows users to register, log in, and upload thyroid images to get disease predictions with confidence scores.
 
----
-
 ##  Features
 
 - User Registration and Login (SQLite database)
